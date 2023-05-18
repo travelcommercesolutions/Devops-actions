@@ -1,0 +1,26 @@
+name: "Set Module.json Version"
+description: "Updating file versions of module.json"
+inputs:
+  module-manifest-path:
+    description: "Path to module.manifest"
+    required: true
+  module-json-path:
+    description: "Path to module.json"
+    required: true
+  package-url:
+    description: "URL to version package"
+    required: true
+  version:
+    description: "Package version"
+    required: true
+runs:
+  using: composite
+  steps:
+    - shell: pwsh
+      id: setversion
+      env:
+        MODULE_MANIFEST_PATH: ${{ inputs.module-manifest-path }}
+        MODULE_JSON_PATH: ${{ inputs.module-json-path }}
+        PACKAGE_URL: ${{ inputs.package-url }}
+        VERSION: ${{ inputs.version }}
+      run: ${{ github.action_path }}\setVersionModule.ps1

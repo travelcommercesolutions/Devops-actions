@@ -1,0 +1,23 @@
+name: "Archive Files"
+description: "Archive file(s) and directories"
+inputs:
+  path:
+    description: "File(s) or directory to archive"
+    default: '.\'
+    required: true
+  archive-name:
+    description: "Name of archive to create"
+    default: archive.zip
+runs:
+  using: composite
+  steps:
+    - shell: pwsh
+      id: archive
+      env:
+        PATH_TO_ARCHIVE: ${{ inputs.path }}
+        ARCHIVE_NAME: ${{ inputs.archive-name }}
+      run: ${{ github.action_path }}\archive.ps1
+outputs:
+  archive-name:
+    description: Created archive name
+    value: ${{ steps.archive.outputs.archive-name }}
